@@ -1,14 +1,46 @@
-// do not change these lines
-let adults = 0
-let children = 0
+// soft-play.js
+let adults = 0;
+let children = 0;
 
-// TODO: Write your functions in the below section. Your functions should update
-// the adults and children variables defined above.
-// Start with the occupancy function.
-
-// TODO: Change the undefined values below to the name of your functions
-module.exports = {
-  enter: undefined,
-  leave: undefined,
-  occupancy: undefined
+function occupancy() {
+  return {
+    adults: adults,
+    children: children,
+  };
 }
+
+function enter(numAdults, numChildren) {
+  if (numChildren > numAdults) {
+    return false; 
+  }
+  adults += numAdults;
+  children += numChildren;
+  return true;
+}
+
+function leave(numAdults, numChildren) {
+  if (numAdults > adults || numChildren > children) {
+    return false; 
+  }
+  
+  if ((adults - numAdults) < (children - numChildren)) {
+    return false; 
+  }
+  
+  // Check if someone is trying to leave with more children than adults
+  if (numChildren > numAdults) {
+    return false;
+  }
+
+  // Update the counts as the checks passed
+  adults -= numAdults;
+  children -= numChildren;
+  return true;
+}
+
+
+module.exports = {
+  enter: enter,
+  leave: leave,
+  occupancy: occupancy,
+};
